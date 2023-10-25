@@ -1,5 +1,5 @@
 import { defineAppOperator } from "../operator";
-import { ejsTemplate } from "./templates/render";
+import { tr } from "./templates/renderer";
 
 export default defineAppOperator({
     operate: async (app) => {
@@ -7,7 +7,7 @@ export default defineAppOperator({
             method: "GET",
             path: "/",
             handler: async (_, h) => {
-                const html = await ejsTemplate("home.ejs");
+                const html = await tr.ejs("home.ejs");
                 return h.response(html).type("text/html");
             },
         });

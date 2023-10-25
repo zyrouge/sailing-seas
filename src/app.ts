@@ -5,6 +5,7 @@ import HapiPino from "hapi-pino";
 import { AppOperator } from "./operator";
 
 import rAuth from "./routes/_auth";
+import rIconPng from "./routes/static/icon.png";
 import rStylesCss from "./routes/static/styles.css";
 import rLogin from "./routes/login";
 import rHome from "./routes/home";
@@ -44,7 +45,14 @@ export class App {
         return process.env.NODE_ENV === "production";
     }
 
-    static operators: AppOperator[] = [rAuth, rStylesCss, rLogin, rHome, rNyaa];
+    static operators: AppOperator[] = [
+        rAuth,
+        rIconPng,
+        rStylesCss,
+        rLogin,
+        rHome,
+        rNyaa,
+    ];
 }
 
 export class AppStore {

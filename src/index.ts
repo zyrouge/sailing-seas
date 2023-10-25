@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
-import { App } from "./app";
-
 dotenv.config();
+
+import { App } from "./app";
 
 const start = async () => {
     const { HOST, PORT } = process.env;

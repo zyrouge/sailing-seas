@@ -1,5 +1,5 @@
 import { defineAppOperator } from "../operator";
-import { ejsTemplate } from "./templates/render";
+import { tr } from "./templates/renderer";
 
 export default defineAppOperator({
     operate: async (app) => {
@@ -22,7 +22,7 @@ export default defineAppOperator({
                     req.cookieAuth.set({ token });
                     return h.redirect(req.query.next ?? "/");
                 }
-                const html = await ejsTemplate("login.ejs");
+                const html = await tr.ejs("login.ejs");
                 return h.response(html).type("text/html");
             },
         });

@@ -1,6 +1,6 @@
 import { Nyaa, NyaaSearchResult } from "../helpers/nyaa";
 import { defineAppOperator } from "../operator";
-import { ejsTemplate } from "./templates/render";
+import { tr } from "./templates/renderer";
 
 export default defineAppOperator({
     operate: async (app) => {
@@ -13,7 +13,7 @@ export default defineAppOperator({
                 if (typeof terms === "string" && terms.length > 0) {
                     result = await Nyaa.search(terms);
                 }
-                const html = await ejsTemplate("nyaa.ejs", { result });
+                const html = await tr.ejs("nyaa.ejs", { result });
                 return h.response(html).type("text/html");
             },
         });
