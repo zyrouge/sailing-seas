@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= site.name %></title>
+        <link rel="stylesheet" href="<%= site.baseUrl %>static/styles.css" />
+    </head>
+    <body>
+        <div class="container container-y">
+            <div><%= site.name %></div>
+            <h1>Login</h1>
+            <hr />
+            <form
+                id="login-form"
+                action="<%= site.baseUrl %>login"
+                method="post"
+            >
+                <input
+                    class="block"
+                    type="password"
+                    placeholder="Enter passcode"
+                    name="passcode"
+                />
+                <input type="submit" value="Login" />
+            </form>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const queries = new URLSearchParams(window.location.search);
+                const redirectTo = queries.get("next");
+                if (redirectTo) {
+                    const loginForm = document.getElementById("login-form");
+                    loginForm.action += `?next=${redirectTo}`;
+                }
+            });
+        </script>
+    </body>
+</html>

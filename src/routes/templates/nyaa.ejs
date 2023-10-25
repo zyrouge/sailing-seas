@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="widp=device-widp, initial-scale=1.0" />
+        <title><%= site.name %></title>
+        <link rel="stylesheet" href="<%= site.baseUrl %>static/styles.css" />
+    </head>
+    <body>
+        <div class="container container-y">
+            <div><%= site.name %></div>
+            <h1>Nyaa</h1>
+            <hr />
+            <div>
+                <input
+                    id="search-terms"
+                    type="text"
+                    placeholder="Search terms..."
+                    value="<%= result?.terms %>"
+                />
+                <input id="search-button" type="submit" value="Search" />
+            </div>
+            <% if (result) { %>
+            <table>
+                <tbody>
+                    <% for( const [i, x] of Object.entries(result.items) ) { %>
+                    <tr>
+                        <td>
+                            <p
+                                class="caption dim no-margin-bottom"
+                                style="margin-bottom: 0.4rem"
+                            >
+                                <%= [ +i + 1, x.id, x.category, x.size, x.date,
+                                x.seeders, x.leechers, x.downloads ].join(" / ")
+                                %>
+                            </p>
+                            <p style="margin-bottom: 0.4rem"><%= x.title %></p>
+                            <p style="margin-bottom: 0.4rem">
+                                <a href="<%= x.url %>">View</a>
+                                <span class="size-2"></span>
+                                <a href="<%= x.magnet %>">Magnet</a>
+                            </p>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+            <!--  -->
+            <% if (result.items.length === 0) { %>
+            <p>No results.</p>
+            <% } %>
+            <!--  -->
+            <% } %>
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const termsElement = document.getElementById("search-terms");
+                const termsButton = document.getElementById("search-button");
+                termsButton.addEventListener("click", () => {
+                    const terms = termsElement.value;
+                    location.assign(`?terms=${encodeURIComponent(terms)}`);
+                });
+            });
+        </script>
+    </body>
+</html>
