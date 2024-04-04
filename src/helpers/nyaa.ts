@@ -36,7 +36,7 @@ export class Nyaa {
         const html = await resp.body.text();
         const document = parseHtml(html);
         const rows = document.querySelectorAll(".torrent-list tbody tr");
-        const items = rows.slice(0, 5).map((x) => {
+        const items = rows.map((x) => {
             const [
                 category,
                 name,
