@@ -15,6 +15,7 @@
                     type="text"
                     placeholder="Search terms..."
                     value="<%= result?.terms %>"
+                    onkeyup="handleFormKeyup(event)"
                 />
                 <input id="search-button" type="submit" value="Search" />
             </div>
@@ -51,13 +52,21 @@
             <% } %>
         </div>
         <script>
-            document.addEventListener("DOMContentLoaded", () => {
+            function search() {
                 const termsElement = document.getElementById("search-terms");
+                const terms = termsElement.value;
+                location.assign(`?terms=${encodeURIComponent(terms)}`);
+            }
+
+            function handleFormKeyup(e) {
+                if (e.keyCode === 13) {
+                    search();
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
                 const termsButton = document.getElementById("search-button");
-                termsButton.addEventListener("click", () => {
-                    const terms = termsElement.value;
-                    location.assign(`?terms=${encodeURIComponent(terms)}`);
-                });
+                termsButton.addEventListener("click", () => search());
             });
         </script>
     </body>

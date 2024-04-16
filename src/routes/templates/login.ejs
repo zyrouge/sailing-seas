@@ -13,6 +13,7 @@
                 id="login-form"
                 action="<%= site.baseUrl %>login"
                 method="post"
+                onkeyup="handleFormKeyup(event)"
             >
                 <input
                     class="block"
@@ -25,6 +26,13 @@
         </div>
 
         <script>
+            function handleFormKeyup(e) {
+                if (e.keyCode === 13) {
+                    const form = document.getElementById("login-form");
+                    form.submit();
+                }
+            }
+
             document.addEventListener("DOMContentLoaded", () => {
                 const queries = new URLSearchParams(window.location.search);
                 const redirectTo = queries.get("next");
