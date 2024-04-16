@@ -2,9 +2,10 @@
     "name": "sailing-seas",
     "version": "0.0.0",
     "description": "",
-    "main": "./src/index.ts",
+    "main": "dist/index.js",
     "scripts": {
-        "start": "bun run ."
+        "start": "node .",
+        "build": "tsc && copyup ./src/**/*.{ejs,css,png} ./dist/"
     },
     "author": "Zyrouge",
     "license": "ISC",
@@ -12,6 +13,7 @@
         "@types/ejs": "^3.1.5",
         "@types/hapi__cookie": "^12.0.5",
         "@types/node": "^20.12.7",
+        "copyfiles": "^2.4.1",
         "typescript": "^5.4.5"
     },
     "dependencies": {
