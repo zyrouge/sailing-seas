@@ -2,6 +2,7 @@ package routes
 
 import (
 	"embed"
+	"io/fs"
 	"net/http"
 	"sailing-seas/core"
 )
@@ -10,6 +11,10 @@ import (
 var staticDir embed.FS
 
 func StaticRoute(app *core.App, mux *http.ServeMux) {
-	fileServer := http.FileServer(http.FS(staticDir))
-	mux.Handle("GET /static/", http.StripPrefix("/static", fileServer))
+	staticSubDir, err := fs.Sub(staticDir, "static")
+	if err != nil {
+		panic(err)
+	}
+	fileServer := http.FileServerFS(staticSubDir)
+	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 }
