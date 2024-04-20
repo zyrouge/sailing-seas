@@ -1,0 +1,62 @@
+{{define "nyaa"}}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {{template "head" .}}
+        <title>Nyaa | {{.SiteName}}</title>
+    </head>
+    <body>
+        <div class="container container-y">
+            <div>{{.SiteName}}</div>
+            <h1>Nyaa</h1>
+            <hr />
+            <form id="search-form" action="/nyaa" method="get" autocomplete="off">
+                <input
+                    name="q"
+                    id="search-terms"
+                    type="text"
+                    placeholder="Search terms..."
+                    value="{{.SearchTerms}}"
+                    onkeyup="handleFormKeyup(event)"
+                />
+                <input type="submit" value="Search" />
+            </form>
+            {{if .HasSearchResults}}
+            <table>
+                <tbody>
+                    {{range $i, $x := .SearchResults}}
+                    <tr>
+                        <td>
+                            <p
+                                class="caption dim no-margin-bottom"
+                                style="margin-bottom: 0.4rem"
+                            >
+                                {{list (add $i 1) .Category .Size .Date .Seeders .Leechers .Downloads | join " / "}}
+                            </p>
+                            <p style="margin-bottom: 0.4rem">{{.Title}}</p>
+                            <p style="margin-bottom: 0.4rem">
+                                <a href="{{.Url}}">View</a>
+                                <span class="size-2"></span>
+                                <a href="{{.Magnet | magnetUrl}}">Magnet</a>
+                            </p>
+                        </td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+            {{else if .HasSearchTerms}}
+            <p>No results.</p>
+            {{end}}
+        </div>
+        <script>
+            function handleFormKeyup(e) {
+                if (e.keyCode === 13) {
+                    e.preventDefault();
+                    const form = document.getElementById("search-form");
+                    form.submit();
+                }
+            }
+        </script>
+    </body>
+</html>
+{{end}}

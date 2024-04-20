@@ -1,0 +1,21 @@
+{{define "home"}}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {{template "head" .}}
+        <title>{{.SiteName}}</title>
+    </head>
+    <body>
+        <div class="container container-y">
+            <div>{{.SiteName}}</div>
+            <h1>It's the time...</h1>
+            <hr />
+            <div class="flex-flow">
+                <div>
+                    <a class="button" href="/nyaa">Nyaa</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+{{end}}
