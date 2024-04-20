@@ -18,6 +18,7 @@ func nyaaRouteHandler() http.HandlerFunc {
 		items, err := helpers.NyaaSearch(terms)
 		if err != nil {
 			log.Error().Err(err).Msgf("nyaa search failed for query '%s'", terms)
+			items = []helpers.NyaaSearchItem{}
 		}
 		err = ExecuteTemplate(w, "nyaa", map[string]any{
 			"HasSearchTerms":   terms != "",
