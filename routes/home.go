@@ -8,10 +8,10 @@ import (
 )
 
 func HomeRoute(app *core.App, mux *http.ServeMux) {
-	mux.HandleFunc("GET /{$}", NeedsAuthentication(homeRouteHandler(app)))
+	mux.HandleFunc("GET /{$}", NeedsAuthentication(homeRouteHandler()))
 }
 
-func homeRouteHandler(app *core.App) http.HandlerFunc {
+func homeRouteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		err := ExecuteTemplate(w, "home", map[string]any{})
 		if err != nil {

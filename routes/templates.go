@@ -1,9 +1,9 @@
 package routes
 
 import (
+	"embed"
 	"html/template"
 	"io"
-	"path/filepath"
 	"strings"
 
 	"github.com/Masterminds/sprig/v3"
@@ -12,13 +12,13 @@ import (
 
 var cachedTemplates *template.Template
 
+//go:embed templates/*.gotmpl templates/partials/*.gotmpl
+var templatesDir embed.FS
+
 func ExecuteTemplate(wr io.Writer, name string, data map[string]any) error {
 	if cachedTemplates == nil {
-		files, err := getTemplateFiles()
-		if err != nil {
-			return err
-		}
-		parsed, err := template.New("_").Funcs(getTemplateFuncMap()).ParseFiles(files...)
+		temp := template.New("_").Funcs(getTemplateFuncMap())
+		parsed, err := temp.ParseFS(templatesDir, "templates/*.gotmpl", "templates/partials/*.gotmpl")
 		if err != nil {
 			return err
 		}
@@ -26,19 +26,6 @@ func ExecuteTemplate(wr io.Writer, name string, data map[string]any) error {
 	}
 	data["SiteName"] = "Sailing Seas"
 	return cachedTemplates.ExecuteTemplate(wr, name, data)
-}
-
-func getTemplateFiles() ([]string, error) {
-	dirs := []string{"routes/templates/*.gohtml", "routes/templates/partials/*.gohtml"}
-	files := []string{}
-	for _, x := range dirs {
-		matched, err := filepath.Glob(x)
-		if err != nil {
-			return nil, err
-		}
-		files = append(files, matched...)
-	}
-	return files, nil
 }
 
 const templateFilterFail = "ZsstmplZ"

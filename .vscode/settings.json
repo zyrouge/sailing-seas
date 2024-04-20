@@ -1,0 +1,15 @@
+{
+    "editor.formatOnSave": true,
+    "[go]": {
+        "editor.defaultFormatter": "golang.go"
+    },
+    "[go.mod]": {
+        "editor.defaultFormatter": "golang.go"
+    },
+    "[go.sum]": {
+        "editor.defaultFormatter": "golang.go"
+    },
+    "[gotmpl]": {
+        "editor.defaultFormatter": "golang.go"
+    }
+}

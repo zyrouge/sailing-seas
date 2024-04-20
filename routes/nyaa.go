@@ -9,10 +9,10 @@ import (
 )
 
 func NyaaRoute(app *core.App, mux *http.ServeMux) {
-	mux.HandleFunc("GET /nyaa", NeedsAuthentication(nyaaRouteHandler(app)))
+	mux.HandleFunc("GET /nyaa", NeedsAuthentication(nyaaRouteHandler()))
 }
 
-func nyaaRouteHandler(app *core.App) http.HandlerFunc {
+func nyaaRouteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		terms := r.URL.Query().Get("q")
 		items, err := helpers.NyaaSearch(terms)

@@ -32,7 +32,3 @@ func LoginRoute(app *core.App, mux *http.ServeMux) {
 		}
 	})
 }
-
-func renderLoginTemplate(w http.ResponseWriter, r *http.Request, loginFailed bool) {
-
-}
