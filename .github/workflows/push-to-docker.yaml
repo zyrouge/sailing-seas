@@ -1,14 +1,14 @@
 name: Push to Docker
 
 on:
-    push:
-        branches:
-            - main
-        paths:
-            - go.mod
-            - go.sum
-            - "**/*.go"
-            - "**/*.gotmpl"
+    # push:
+    #     branches:
+    #         - main
+    #     paths:
+    #         - go.mod
+    #         - go.sum
+    #         - "**/*.go"
+    #         - "**/*.gotmpl"
     workflow_dispatch:
 
 jobs:
