@@ -1,10 +1,11 @@
 package main
 
 import (
+	_ "github.com/joho/godotenv/autoload"
+
 	"sailing-seas/core"
 	"sailing-seas/routes"
 
-	_ "github.com/joho/godotenv/autoload"
 	"github.com/rs/zerolog/log"
 )
 

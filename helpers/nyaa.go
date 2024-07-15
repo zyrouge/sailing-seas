@@ -9,6 +9,54 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
+type NyaaSortBy string
+
+const (
+	NyaaSortBySize      NyaaSortBy = "size"
+	NyaaSortByDate      NyaaSortBy = "id"
+	NyaaSortBySeeders   NyaaSortBy = "seeders"
+	NyaaSortByLeechers  NyaaSortBy = "leechers"
+	NyaaSortByDownloads NyaaSortBy = "downloads"
+)
+
+var NyaaSortByMap = map[NyaaSortBy]string{
+	NyaaSortBySize:      "Size",
+	NyaaSortByDate:      "Date",
+	NyaaSortBySeeders:   "Seeders",
+	NyaaSortByLeechers:  "Leechers",
+	NyaaSortByDownloads: "Downloads",
+}
+
+func (x NyaaSortBy) Title() string {
+	return NyaaSortByMap[x]
+}
+
+func (x NyaaSortBy) IsValid() bool {
+	_, ok := NyaaSortByMap[x]
+	return ok
+}
+
+type NyaaSortOrder string
+
+const (
+	NyaaSortOrderAscending  NyaaSortOrder = "asc"
+	NyaaSortOrderDescending NyaaSortOrder = "desc"
+)
+
+var NyaaSortOrderMap = map[NyaaSortOrder]string{
+	NyaaSortOrderAscending:  "Ascending",
+	NyaaSortOrderDescending: "Descending",
+}
+
+func (x NyaaSortOrder) Title() string {
+	return NyaaSortOrderMap[x]
+}
+
+func (x NyaaSortOrder) IsValid() bool {
+	_, ok := NyaaSortOrderMap[x]
+	return ok
+}
+
 type NyaaSearchItem struct {
 	Category  string
 	Title     string
@@ -21,12 +69,12 @@ type NyaaSearchItem struct {
 	Downloads int
 }
 
-func NyaaSearch(terms string) ([]NyaaSearchItem, error) {
-	if terms == "" {
+func NyaaSearch(terms string, page int, sort NyaaSortBy, order NyaaSortOrder) ([]NyaaSearchItem, error) {
+	if terms == "" || page < 1 || !sort.IsValid() || !order.IsValid() {
 		return []NyaaSearchItem{}, nil
 	}
 	base := "https://nyaa.si"
-	url := fmt.Sprintf("%s/?q=%s&s=seeders&o=desc", base, url.QueryEscape(terms))
+	url := fmt.Sprintf("%s/?q=%s&s=%s&o=%s&p=%d", base, url.QueryEscape(terms), sort, order, page)
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err

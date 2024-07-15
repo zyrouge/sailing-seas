@@ -10,6 +10,9 @@
             <div>{{.SiteName}}</div>
             <h1>Nyaa</h1>
             <hr />
+            {{if .ErrorMessage}}
+            <p class="caption error">Something went wrong! ({{.ErrorMessage}})</p>
+            {{end}}
             <form id="search-form" action="/nyaa" method="get" autocomplete="off">
                 <input
                     name="q"
@@ -19,9 +22,31 @@
                     value="{{.SearchTerms}}"
                     onkeyup="handleFormKeyup(event)"
                 />
+                <select name="s" data-selected="{{.SortBy}}">
+                    {{range $k, $v := .SortByMap}}
+                    <option value="{{$k}}">{{$v}}</option>
+                    {{end}}
+                </select>
+                <select name="o" data-selected="{{.SortOrder}}">
+                    {{range $k, $v := .SortOrderMap}}
+                    <option value="{{$k}}">{{$v}}</option>
+                    {{end}}
+                </select>
                 <input type="submit" value="Search" />
+                <script>
+                    (() => {
+                        const attr = "data-selected";
+                        const select = (s) => {
+                            const e = document.querySelector(s);
+                            e.value = e.getAttribute(attr);
+                            e.removeAttribute(attr);
+                        };
+                        select("#search-form select[name='s']");
+                        select("#search-form select[name='o']");
+                    })();
+                </script>
             </form>
-            {{if .HasSearchResults}}
+            {{if .SearchResults}}
             <table>
                 <tbody>
                     {{range $i, $x := .SearchResults}}
@@ -44,7 +69,14 @@
                     {{end}}
                 </tbody>
             </table>
-            {{else if .HasSearchTerms}}
+            <div>
+                <span>Page {{.Page}}</span>
+                <span class="very-dim">|</span>
+                <a href="?p={{add .Page 1}}&{{urlquery .UrlQueryNoPage}}">Go to previous page</a>
+                <span class="very-dim">|</span>
+                <a href="?p={{sub .Page 1}}&{{.UrlQueryNoPage}}">Go to next page</a>
+            </div>
+            {{else if .SearchTerms}}
             <p>No results.</p>
             {{end}}
         </div>
