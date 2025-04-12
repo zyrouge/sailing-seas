@@ -8,7 +8,7 @@ import (
 )
 
 func HomeRoute(app *core.App, mux *http.ServeMux) {
-	mux.HandleFunc("GET /{$}", NeedsAuthentication(homeRouteHandler()))
+	mux.HandleFunc("GET /{$}", homeRouteHandler())
 }
 
 func homeRouteHandler() http.HandlerFunc {

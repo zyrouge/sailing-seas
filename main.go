@@ -18,7 +18,6 @@ func main() {
 		routes.StaticRoute,
 		routes.PingRoute,
 		routes.HomeRoute,
-		routes.LoginRoute,
 		routes.NyaaRoute,
 	}
 	if err := core.StartServer(app, routes); err != nil {

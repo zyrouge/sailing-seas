@@ -11,7 +11,7 @@ import (
 )
 
 func NyaaRoute(app *core.App, mux *http.ServeMux) {
-	mux.HandleFunc("GET /nyaa", NeedsAuthentication(nyaaRouteHandler()))
+	mux.HandleFunc("GET /nyaa", nyaaRouteHandler())
 }
 
 func nyaaRouteHandler() http.HandlerFunc {

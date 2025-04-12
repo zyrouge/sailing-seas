@@ -7,10 +7,8 @@ import (
 )
 
 type Env struct {
-	Host     string
-	Port     int
-	Username string
-	Password string
+	Host string
+	Port int
 }
 
 func ParseEnv() (*Env, error) {
@@ -19,19 +17,9 @@ func ParseEnv() (*Env, error) {
 	if err != nil {
 		return nil, errors.New("invalid env SS_PORT")
 	}
-	username := os.Getenv("SS_USERNAME")
-	if username == "" {
-		return nil, errors.New("invalid env SS_USERNAME")
-	}
-	passcode := os.Getenv("SS_PASSCODE")
-	if passcode == "" {
-		return nil, errors.New("invalid env SS_PASSCODE")
-	}
 	env := &Env{
-		Host:     host,
-		Port:     port,
-		Username: username,
-		Password: passcode,
+		Host: host,
+		Port: port,
 	}
 	return env, nil
 }
